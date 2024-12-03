@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
-    Vector3 MoveCharacter;
+    public int hpNow;
+    public int energyNow;
+    Vector3 moveCharacter;
     private ControllerJoysticks controllerJoysticks;
     private CharacterController characterController;
     private Animator animatiorPlayer;
-    public int MoveSpeed;
+    public int moveSpeed;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         controllerJoysticks = FindObjectOfType<ControllerJoysticks>();
         animatiorPlayer = GetComponent<Animator>();
     }
+    // void TakeEnergy()
+    // {
+    //     WaitForSeconds delay = new WaitForSeconds(5);
+    //     energyNow -= 1;
+    // }
     void Update()
     {
+        // TakeEnergy();
         CharacterMove();
-
     }
     public void Attack()
     {
@@ -28,10 +35,10 @@ public class Player : MonoBehaviour
     }
     void CharacterMove()
     {
-        MoveCharacter = Vector3.zero;
-        MoveCharacter.x = controllerJoysticks.Horizontal() * MoveSpeed;
-        MoveCharacter.z = controllerJoysticks.Vertical() * MoveSpeed;
-        if (MoveCharacter.x != 0 || MoveCharacter.z != 0)
+        moveCharacter = Vector3.zero;
+        moveCharacter.x = controllerJoysticks.Horizontal() * moveSpeed;
+        moveCharacter.z = controllerJoysticks.Vertical() * moveSpeed;
+        if (moveCharacter.x != 0 || moveCharacter.z != 0)
         {
             animatiorPlayer.SetBool("Run", true);
         }
@@ -39,11 +46,11 @@ public class Player : MonoBehaviour
         {
             animatiorPlayer.SetBool("Run", false);
         }
-        if (Vector3.Angle(Vector3.forward, MoveCharacter) > 1f || Vector3.Angle(Vector3.forward, MoveCharacter) == 0)
+        if (Vector3.Angle(Vector3.forward, moveCharacter) > 1f || Vector3.Angle(Vector3.forward, moveCharacter) == 0)
         {
-            Vector3 direct = Vector3.RotateTowards(transform.forward, MoveCharacter, MoveSpeed, 0.0f);
+            Vector3 direct = Vector3.RotateTowards(transform.forward, moveCharacter, moveSpeed, 0.0f);
             transform.rotation = Quaternion.LookRotation(direct);
         }
-        characterController.Move(MoveCharacter * Time.deltaTime);
+        characterController.Move(moveCharacter * Time.deltaTime);
     }
 }
