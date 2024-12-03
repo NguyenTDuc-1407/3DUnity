@@ -16,7 +16,7 @@ public class DataInventory : MonoBehaviour
     public void Add(Item item)
     {
         items.Add(item);
-        FindObjectOfType<UIMangager>().UpdateGameState(UIMangager.GameState.inventoryUI);
+        FindObjectOfType<GameManager>().UpdateGameState(GameManager.GameState.inventoryUI);
     }
     public void RemoveItem(Item item)
     {

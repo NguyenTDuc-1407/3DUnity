@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameState state;
     public static event Action<GameState> OnGameStateChanged;
-    public DataMangager dataMangager;
     public Player player;
     public GameObject backPack;
-    public UIMangager uiMangager;
+    public Health healthUI;
+    public EnergyUI energyUI;
+    public InventoryUI inventoryUI;
     int hpMax = 100;
-    int energyMax = 80;
+    [SerializeField] int energyMax = 4;
+    int energyNow;
     void Awake()
     {
         if (instance == null)
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
     {
         backPack.SetActive(false);
         UpdateGameState(GameState.start);
+        StartCoroutine(player.TakeEnergy());
     }
     public void UpdateGameState(GameState newState)
     {
@@ -39,7 +42,13 @@ public class GameManager : MonoBehaviour
             case GameState.playerAtack:
                 Attack();
                 break;
-            case GameState.palyerPickUp:
+            case GameState.playerPickUp:
+                break;
+            case GameState.updateEnergy:
+                UpdatePlayerEnergy();
+                break;
+            case GameState.inventoryUI:
+                InventorySlotUI();
                 break;
             case GameState.end:
                 break;
@@ -50,18 +59,33 @@ public class GameManager : MonoBehaviour
     void PlayerHealth()
     {
         player.hpNow = hpMax;
-        if (uiMangager.healthUI != null)
+        if (healthUI != null)
         {
-            uiMangager.healthUI.updateBar(player.hpNow, hpMax);
+            healthUI.updateBar(player.hpNow, hpMax);
         }
     }
     void PlayerEnergy()
     {
-        player.energyNow = energyMax;
-        if (uiMangager.healthUI != null)
+        player.energyPlayer = energyMax;
+        if (healthUI != null)
         {
-            uiMangager.healthUI.updateBar(player.energyNow, energyMax);
+            energyUI.updateBar(player.energyPlayer, energyMax);
         }
+    }
+    void UpdatePlayerEnergy()
+    {
+        energyNow = player.energyPlayer;
+        if (healthUI != null)
+        {
+            energyUI.updateBar(energyNow, energyMax);
+        }
+    }
+    void InventorySlotUI()
+    {
+        inventoryUI.DisplayInventory();
+    }
+   public void RecoveryEnergyItem(int itemRecovery){
+        player.RecoveryEnergyItem(itemRecovery);
     }
     void Attack()
     {
@@ -71,7 +95,10 @@ public class GameManager : MonoBehaviour
     {
         start,
         playerAtack,
-        palyerPickUp,
+        playerPickUp,
+        updateEnergy,
+        recoveryEnergyItem,
+        inventoryUI,
         inventoryItem,
         end
 

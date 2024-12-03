@@ -14,5 +14,13 @@ public class ItemUI : MonoBehaviour
         DataInventory.instance.RemoveItem(item);
         Destroy(this.gameObject);
     }
-
+    public void UseItem(){
+        Remove();
+        switch (item.itemtype)
+        {
+            case Itemtype.energy:
+            FindObjectOfType<GameManager>().RecoveryEnergyItem(item.value);
+            break; 
+        }
+    }
 }

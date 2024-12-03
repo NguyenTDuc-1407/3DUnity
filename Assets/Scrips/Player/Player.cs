@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int hpNow;
-    public int energyNow;
+    public int energyPlayer;
     Vector3 moveCharacter;
     private ControllerJoysticks controllerJoysticks;
     private CharacterController characterController;
@@ -16,14 +16,25 @@ public class Player : MonoBehaviour
         controllerJoysticks = FindObjectOfType<ControllerJoysticks>();
         animatiorPlayer = GetComponent<Animator>();
     }
-    // void TakeEnergy()
-    // {
-    //     WaitForSeconds delay = new WaitForSeconds(5);
-    //     energyNow -= 1;
-    // }
+    public IEnumerator TakeEnergy()
+    {
+        while (energyPlayer > 0)
+        {
+            energyPlayer -= 1;
+            yield return new WaitForSeconds(2f);
+        }
+    }
+    public void RecoveryEnergyItem(int itemRecovery)
+    {
+        energyPlayer += itemRecovery;
+    }
+    void FixedUpdate()
+    {
+        FindObjectOfType<GameManager>().UpdateGameState(GameManager.GameState.updateEnergy);
+    }
     void Update()
     {
-        // TakeEnergy();
+
         CharacterMove();
     }
     public void Attack()
