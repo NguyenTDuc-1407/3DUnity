@@ -30,11 +30,10 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
-        FindObjectOfType<GameManager>().UpdateGameState(GameManager.GameState.updateEnergy);
+       GameManager.instance.UpdatePlayerEnergy();
     }
     void Update()
     {
-
         CharacterMove();
     }
     public void Attack()

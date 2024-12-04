@@ -17,21 +17,12 @@ public class InventoryUI : MonoBehaviour
         }
         foreach (Item item in DataInventory.instance.items)
         {
-            int countItem = 0;
             GameObject itemNewSlot = Instantiate(inventorySlotUI, itemsParentUI);
-            foreach (Item itemCheck in DataInventory.instance.items)
-            {
-                if (item.itemName == itemCheck.itemName)
-                {
-                    countItem++;
-                }
-            }
             var countItemUI = itemNewSlot.transform.Find("CountItem").GetComponent<TextMeshProUGUI>();
             var itemImageUI = itemNewSlot.transform.Find("ImageItem").GetComponent<Image>();
-            countItemUI.text = countItem.ToString();
+            countItemUI.text = item.amount.ToString();
             itemImageUI.sprite = item.image;
             itemNewSlot.GetComponent<ItemUI>().SetItem(item);
-
         }
     }
 }

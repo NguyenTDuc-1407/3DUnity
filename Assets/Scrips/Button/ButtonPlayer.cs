@@ -5,7 +5,7 @@ public class ButtonPlayer : MonoBehaviour
     bool checkOpen = true;
     public void ClickButtonAttack()
     {
-        FindObjectOfType<GameManager>().UpdateGameState(GameManager.GameState.playerAtack);
+        GameManager.instance.Attack();
     }
     public void ClickPickUp()
     {

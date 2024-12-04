@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public InventoryUI inventoryUI;
     int hpMax = 100;
     [SerializeField] int energyMax = 4;
-    int energyNow;
     void Awake()
     {
         if (instance == null)
@@ -37,19 +36,6 @@ public class GameManager : MonoBehaviour
                 PlayerHealth();
                 PlayerEnergy();
                 break;
-            case GameState.inventoryItem:
-                break;
-            case GameState.playerAtack:
-                Attack();
-                break;
-            case GameState.playerPickUp:
-                break;
-            case GameState.updateEnergy:
-                UpdatePlayerEnergy();
-                break;
-            case GameState.inventoryUI:
-                InventorySlotUI();
-                break;
             case GameState.end:
                 break;
 
@@ -64,6 +50,13 @@ public class GameManager : MonoBehaviour
             healthUI.updateBar(player.hpNow, hpMax);
         }
     }
+    public void UpdatePlayerHealth()
+    {
+        if (healthUI != null)
+        {
+            healthUI.updateBar(player.hpNow, hpMax);
+        }
+    }
     void PlayerEnergy()
     {
         player.energyPlayer = energyMax;
@@ -72,34 +65,29 @@ public class GameManager : MonoBehaviour
             energyUI.updateBar(player.energyPlayer, energyMax);
         }
     }
-    void UpdatePlayerEnergy()
+    public void UpdatePlayerEnergy()
     {
-        energyNow = player.energyPlayer;
+
         if (healthUI != null)
         {
-            energyUI.updateBar(energyNow, energyMax);
+            energyUI.updateBar(player.energyPlayer, energyMax);
         }
     }
-    void InventorySlotUI()
+    public void InventorySlotUI()
     {
         inventoryUI.DisplayInventory();
     }
-   public void RecoveryEnergyItem(int itemRecovery){
+    public void RecoveryEnergyItem(int itemRecovery)
+    {
         player.RecoveryEnergyItem(itemRecovery);
     }
-    void Attack()
+    public void Attack()
     {
         player.Attack();
     }
     public enum GameState
     {
         start,
-        playerAtack,
-        playerPickUp,
-        updateEnergy,
-        recoveryEnergyItem,
-        inventoryUI,
-        inventoryItem,
         end
 
     }

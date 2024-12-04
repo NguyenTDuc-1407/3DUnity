@@ -14,13 +14,22 @@ public class ItemUI : MonoBehaviour
         DataInventory.instance.RemoveItem(item);
         Destroy(this.gameObject);
     }
-    public void UseItem(){
-        Remove();
+    public void UseItem()
+    {
+        item.amount -= 1;
+        if (item.amount == 0)
+        {
+            Remove();
+        }
         switch (item.itemtype)
         {
             case Itemtype.energy:
-            FindObjectOfType<GameManager>().RecoveryEnergyItem(item.value);
-            break; 
+                GameManager.instance.RecoveryEnergyItem(item.value);
+                break;
+            case Itemtype.hp:
+                GameManager.instance.RecoveryEnergyItem(item.value);
+                break;
         }
+           GameManager.instance.InventorySlotUI();
     }
 }

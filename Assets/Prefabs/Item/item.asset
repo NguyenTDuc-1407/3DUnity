@@ -17,3 +17,4 @@ MonoBehaviour:
   value: 5
   itemtype: 1
   image: {fileID: 21300000, guid: 6c5d8a63c0676ec49a8a32efa987b4cf, type: 3}
+  amount: 0
