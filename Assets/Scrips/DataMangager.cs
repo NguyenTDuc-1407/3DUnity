@@ -27,10 +27,6 @@
 //         {
 //             case GameState.start:
 //                 break;
-//             case GameState.updateData:
-//                 break;
-//             case GameState.RemoveItemData:
-//                 break;
 //             case GameState.end:
 //                 break;
 
@@ -40,8 +36,6 @@
 //     public enum GameState
 //     {
 //         start,
-//         updateData,
-//         RemoveItemData,
 //         end
 
 //     }

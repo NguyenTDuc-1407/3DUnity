@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject backPack;
     public Health healthUI;
     public EnergyUI energyUI;
-    public InventoryUI inventoryUI;
+    public UIMangager uiMangager;
     int hpMax = 100;
     [SerializeField] int energyMax = 4;
     void Awake()
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     }
     public void InventorySlotUI()
     {
-        inventoryUI.DisplayInventory();
+        uiMangager.InventorySlotUI();
     }
     public void RecoveryEnergyItem(int itemRecovery)
     {
