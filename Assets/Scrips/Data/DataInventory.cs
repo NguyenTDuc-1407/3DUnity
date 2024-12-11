@@ -13,36 +13,5 @@ public class DataInventory : MonoBehaviour
             instance = this;
         }
     }
-    public void Add(Item item)
-    {
-        if (item.IsStack())
-        {
-            bool itemAlreadyInventory = false;
-            foreach (Item inventoryItem in items)
-            {
-                if (inventoryItem.itemtype == item.itemtype)
-                {
-                    inventoryItem.amount += item.amount;
-                    itemAlreadyInventory = true;
-                    GameManager.instance.InventorySlotUI();
-                }
-            }
-            if (!itemAlreadyInventory)
-            {
-                item.amount += 1;
-                items.Add(item);
-                GameManager.instance.InventorySlotUI();
-            }
-        }
-        else
-        {
-            items.Add(item);
-            GameManager.instance.InventorySlotUI();
-        }
-    }
-    public void RemoveItem(Item item)
-    {
-        items.Remove(item);
-    }
 
 }

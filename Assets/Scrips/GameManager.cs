@@ -11,9 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject backPack;
     public Health healthUI;
     public EnergyUI energyUI;
-    public UIMangager uiMangager;
-    int hpMax = 100;
-    [SerializeField] int energyMax = 4;
+    public int hpMax = 100;
+    [SerializeField] public int energyMax = 4;
     void Awake()
     {
         if (instance == null)
@@ -25,7 +24,6 @@ public class GameManager : MonoBehaviour
     {
         backPack.SetActive(false);
         UpdateGameState(GameState.start);
-        StartCoroutine(player.TakeEnergy());
     }
     public void UpdateGameState(GameState newState)
     {
@@ -33,53 +31,13 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.start:
-                PlayerHealth();
-                PlayerEnergy();
+                StartCoroutine(player.TakeEnergy());
                 break;
             case GameState.end:
                 break;
 
         }
         OnGameStateChanged?.Invoke(newState);
-    }
-    void PlayerHealth()
-    {
-        player.hpNow = hpMax;
-        if (healthUI != null)
-        {
-            healthUI.updateBar(player.hpNow, hpMax);
-        }
-    }
-    public void UpdatePlayerHealth()
-    {
-        if (healthUI != null)
-        {
-            healthUI.updateBar(player.hpNow, hpMax);
-        }
-    }
-    void PlayerEnergy()
-    {
-        player.energyPlayer = energyMax;
-        if (healthUI != null)
-        {
-            energyUI.updateBar(player.energyPlayer, energyMax);
-        }
-    }
-    public void UpdatePlayerEnergy()
-    {
-
-        if (healthUI != null)
-        {
-            energyUI.updateBar(player.energyPlayer, energyMax);
-        }
-    }
-    public void InventorySlotUI()
-    {
-        uiMangager.InventorySlotUI();
-    }
-    public void RecoveryEnergyItem(int itemRecovery)
-    {
-        player.RecoveryEnergyItem(itemRecovery);
     }
     public void Attack()
     {

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
-       GameManager.instance.UpdatePlayerEnergy();
+       UIMangager.instance.UpdatePlayerEnergy();
     }
     void Update()
     {

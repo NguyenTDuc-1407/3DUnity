@@ -8,7 +8,7 @@ public class Pickup : MonoBehaviour
     void PickUpItem()
     {
         Destroy(this.gameObject);
-        DataInventory.instance.Add(item);
+        DataMangager.instance.Add(item);
     }
     private void OnTriggerEnter(Collider other)
     {

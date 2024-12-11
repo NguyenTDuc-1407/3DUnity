@@ -215,7 +215,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+  gameManager: {fileID: 1567486539}
   inventoryUI: {fileID: 949333489}
+  healthUI: {fileID: 1400965181}
+  energyUI: {fileID: 1590319080}
 --- !u!4 &100396445
 Transform:
   m_ObjectHideFlags: 0
@@ -1300,7 +1303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &858578591
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2479,6 +2482,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1541737056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1541737058}
+  - component: {fileID: 1541737057}
+  m_Layer: 0
+  m_Name: DataMangager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1541737057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541737056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43b82b3c6ff627469d5440279ea5587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataInventory: {fileID: 312746642}
+  state: 0
+  gameManager: {fileID: 1567486539}
+--- !u!4 &1541737058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541737056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1548801177
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,7 +2638,7 @@ MonoBehaviour:
   backPack: {fileID: 949333486}
   healthUI: {fileID: 1400965181}
   energyUI: {fileID: 1590319080}
-  uiMangager: {fileID: 100396444}
+  hpMax: 100
   energyMax: 10
 --- !u!4 &1567486540
 Transform:
@@ -2910,6 +2960,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9879f53c9cd93464ba81dc6d1208f37b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1698994909}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9879f53c9cd93464ba81dc6d1208f37b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1698994912}
   m_SourcePrefab: {fileID: 100100000, guid: 9879f53c9cd93464ba81dc6d1208f37b, type: 3}
 --- !u!4 &1698994908 stripped
 Transform:
@@ -2978,6 +3031,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &1698994912
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799196397}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4542165, y: 3, z: 1.5709602}
+  m_Center: {x: 0.2271083, y: 2, z: 0.28548002}
 --- !u!1 &1806537312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3260,6 +3334,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 65
       objectReference: {fileID: 0}
+    - target: {fileID: 2711934288760420909, guid: c59dc8f963c23a44ca4ecfea96250d29, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495480345682280629, guid: c59dc8f963c23a44ca4ecfea96250d29, type: 3}
+      propertyPath: m_text
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6077714048250296208, guid: c59dc8f963c23a44ca4ecfea96250d29, type: 3}
       propertyPath: m_Name
       value: InventorySlot
@@ -3296,3 +3378,4 @@ SceneRoots:
   - {fileID: 1806537314}
   - {fileID: 858578594}
   - {fileID: 100396445}
+  - {fileID: 1541737058}
