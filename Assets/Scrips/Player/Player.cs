@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     {
         while (energyPlayer > 0)
         {
+            // UIMangager.instance.UpdatePlayerEnergy();
             energyPlayer -= 1;
             yield return new WaitForSeconds(2f);
         }
@@ -27,10 +28,6 @@ public class Player : MonoBehaviour
     public void RecoveryEnergyItem(int itemRecovery)
     {
         energyPlayer += itemRecovery;
-    }
-    void FixedUpdate()
-    {
-       UIMangager.instance.UpdatePlayerEnergy();
     }
     void Update()
     {
@@ -42,6 +39,16 @@ public class Player : MonoBehaviour
         {
             animatiorPlayer.SetTrigger("Attack");
         }
+    }
+    public void DamePlayer(int damage)
+    {
+        hpNow -= damage;
+        FindObjectOfType<UIMangager>().UpdatePlayerHealth();
+        if (hpNow <= 0)
+        {
+            hpNow = 0;
+        }
+
     }
     void CharacterMove()
     {

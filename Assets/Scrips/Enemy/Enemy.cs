@@ -8,17 +8,25 @@ public class Enemy : MonoBehaviour
     Path path;
     Coroutine move;
     public Seeker seeker;
+    public int hpEnemyNow;
+    private Animator animatiorEnemy;
     [SerializeField] float nextWpDis;
     [SerializeField] float moveSpeed;
     Vector3 direction;
     void Start()
     {
+        animatiorEnemy = GetComponent<Animator>();
         InvokeRepeating("caculatePath", 0f, 0.5f);
-    }
 
+    }
     void Update()
     {
 
+    }
+    public void DameEnemy(int damage)
+    {
+        hpEnemyNow -= damage;
+        FindObjectOfType<UIMangager>().UpdateEnemyHealth();
     }
     void caculatePath()
     {
@@ -26,6 +34,7 @@ public class Enemy : MonoBehaviour
         if (seeker.IsDone())
         {
             seeker.StartPath(transform.position, target, OnpathCallBack);
+            // animatiorEnemy.SetBool("RunWolf", false);
         }
         else
         {
@@ -37,6 +46,7 @@ public class Enemy : MonoBehaviour
     Vector3 findTarget()
     {
         Vector3 playPos = FindObjectOfType<Player>().transform.position;
+        // animatiorEnemy.SetBool("RunWolf", true);
         return playPos;
     }
     void OnpathCallBack(Path p)
@@ -62,7 +72,7 @@ public class Enemy : MonoBehaviour
         int currentWp = 0;
         while (currentWp < path.vectorPath.Count)
         {
-            path.vectorPath[currentWp] = new Vector3(path.vectorPath[currentWp].x,0.554f,path.vectorPath[currentWp].z);
+            path.vectorPath[currentWp] = new Vector3(path.vectorPath[currentWp].x, 0.554f, path.vectorPath[currentWp].z);
             direction = (path.vectorPath[currentWp] - transform.position).normalized;
             Vector3 force = direction * moveSpeed * Time.deltaTime;
             transform.position += force;

@@ -41,7 +41,7 @@ public class DataMangager : MonoBehaviour
             bool itemAlreadyInventory = false;
             foreach (Item inventoryItem in DataInventory.instance.items)
             {
-                if (inventoryItem.itemtype == item.itemtype)
+                if (inventoryItem.id == item.id)
                 {
                     inventoryItem.amount += item.amount;
                     itemAlreadyInventory = true;
