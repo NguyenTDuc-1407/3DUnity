@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class ItemUI : MonoBehaviour
 {
-    Item item;
-    public void SetItem(Item item)
+    ItemDatas itemDatas;
+    public void SetItem(ItemDatas itemDatas)
     {
-        this.item = item;
+        this.itemDatas = itemDatas;
     }
     public void Remove()
     {
-        DataMangager.instance.RemoveItem(item);
+        DataMangager.instance.RemoveItem(itemDatas);
         Destroy(this.gameObject);
     }
     public void UseItem()
     {
-        DataMangager.instance.UseItemInventory(item);
+        DataMangager.instance.UseItemInventory(itemDatas);
         UIMangager.instance.InventorySlotUI();
     }
 }

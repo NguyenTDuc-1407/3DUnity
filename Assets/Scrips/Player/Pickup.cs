@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public Item item;
+    public ItemConfig itemConfig;
     void PickUpItem()
     {
         Destroy(this.gameObject);
-        DataMangager.instance.Add(item);
+        GameManager.instance.itemData.id = itemConfig.id;
+        DataMangager.instance.Add(itemConfig);
     }
     private void OnTriggerEnter(Collider other)
     {

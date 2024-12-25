@@ -15,14 +15,14 @@ public class InventoryUI : MonoBehaviour
         {
             Destroy(itemUI.gameObject);
         }
-        foreach (Item item in DataInventory.instance.items)
+        foreach (ItemDatas itemDatas in GameManager.instance.itemDatas)
         {
             GameObject itemNewSlot = Instantiate(inventorySlotUI, itemsParentUI);
             var countItemUI = itemNewSlot.transform.Find("CountItem").GetComponent<TextMeshProUGUI>();
+            countItemUI.text = itemDatas.amount.ToString();
             var itemImageUI = itemNewSlot.transform.Find("ImageItem").GetComponent<Image>();
-            countItemUI.text = item.amount.ToString();
-            itemImageUI.sprite = item.image;
-            itemNewSlot.GetComponent<ItemUI>().SetItem(item);
+            itemImageUI.sprite = ConfigManger.instance.GetItemConfigById(itemDatas.id).image;
+            itemNewSlot.GetComponent<ItemUI>().SetItem(itemDatas);
         }
     }
 }

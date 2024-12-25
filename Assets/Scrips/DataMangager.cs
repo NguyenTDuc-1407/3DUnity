@@ -6,10 +6,10 @@ using UnityEngine;
 public class DataMangager : MonoBehaviour
 {
     public static DataMangager instance;
-    public DataInventory dataInventory;
     public GameState state;
     public GameManager gameManager;
     public static event Action<GameState> OnGameStateChanged;
+    ConfigManger configManger;
     private void Awake()
     {
         if (instance == null)
@@ -34,56 +34,64 @@ public class DataMangager : MonoBehaviour
         }
         OnGameStateChanged?.Invoke(newState);
     }
-    public void Add(Item item)
+    public void Add(ItemConfig itemConfig)
     {
-        if (item.IsStack())
+        if (ConfigInventory.instance.itemConfigs != null)
         {
-            bool itemAlreadyInventory = false;
-            foreach (Item inventoryItem in DataInventory.instance.items)
+            GameManager.instance.itemData.id = 1;
+            configManger.GetItemConfigById(GameManager.instance.itemData.id);
+            Debug.Log(GameManager.instance.itemData.id);
+            if (itemConfig.IsStack())
             {
-                if (inventoryItem.id == item.id)
+                bool itemAlreadyInventory = false;
+                foreach (ItemConfig inventoryItem in ConfigInventory.instance.itemConfigs)
                 {
-                    inventoryItem.amount += item.amount;
-                    itemAlreadyInventory = true;
+                    if (inventoryItem.id == itemConfig.id)
+                    {
+                        // GameManager.instance.itemData.amount += 1;
+                        itemAlreadyInventory = true;
+                        UIMangager.instance.InventorySlotUI();
+                    }
+                }
+                if (!itemAlreadyInventory)
+                {
+                    // GameManager.instance.itemData.amount += 1;
+                    ConfigInventory.instance.itemConfigs.Add(itemConfig);
                     UIMangager.instance.InventorySlotUI();
                 }
             }
-            if (!itemAlreadyInventory)
+            else
             {
-                item.amount += 1;
-                dataInventory.items.Add(item);
+                ConfigInventory.instance.itemConfigs.Add(itemConfig);
                 UIMangager.instance.InventorySlotUI();
             }
         }
-        else
-        {
-            dataInventory.items.Add(item);
-            UIMangager.instance.InventorySlotUI();
-        }
 
     }
-    public void RemoveItem(Item item)
+    public void RemoveItem(ItemDatas itemDatas)
     {
-        dataInventory.items.Remove(item);
+        GameManager.instance.itemDatas.Remove(itemDatas);
+
     }
     public void RecoveryEnergyItem(int itemRecovery)
     {
         gameManager.player.RecoveryEnergyItem(itemRecovery);
     }
-    public void UseItemInventory(Item item)
+    public void UseItemInventory(ItemDatas itemDatas)
     {
-        item.amount -= 1;
-        if (item.amount == 0)
+        itemDatas.id = configManger.GetItemConfigById(itemDatas.id).id;
+        itemDatas.amount -= 1;
+        if (itemDatas.amount == 0)
         {
-            RemoveItem(item);
+            RemoveItem(itemDatas);
         }
-        switch (item.itemtype)
+        switch (configManger.GetItemConfigById(itemDatas.id).itemtype)
         {
-            case Itemtype.energy:
-                RecoveryEnergyItem(item.value);
+            case Itemtype.Energy:
+                RecoveryEnergyItem(configManger.GetItemConfigById(itemDatas.id).value);
                 break;
-            case Itemtype.hp:
-                RecoveryEnergyItem(item.value);
+            case Itemtype.Hp:
+                RecoveryEnergyItem(configManger.GetItemConfigById(itemDatas.id).value);
                 break;
         }
     }

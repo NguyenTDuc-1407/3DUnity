@@ -31,7 +31,6 @@ public class UIMangager : MonoBehaviour
             case GameState.start:
                 PlayerHealth();
                 PlayerEnergy();
-                EnemyHealth();
                 break;
             case GameState.end:
                 break;
@@ -71,21 +70,6 @@ public class UIMangager : MonoBehaviour
         if (energyUI != null)
         {
             energyUI.updateBar(gameManager.player.energyPlayer, gameManager.energyMax);
-        }
-    }
-    public void EnemyHealth()
-    {
-        gameManager.enemy[0].hpEnemyNow = gameManager.hpMaxEnemy;
-        if (healthUI != null)
-        {
-            healthUI.updateBar(gameManager.enemy[0].hpEnemyNow, gameManager.hpMaxEnemy);
-        }
-    }
-        public void UpdateEnemyHealth()
-    {
-        if (energyUI != null)
-        {
-            energyUI.updateBar(gameManager.enemy[0].hpEnemyNow, gameManager.hpMaxEnemy);
         }
     }
     public enum GameState

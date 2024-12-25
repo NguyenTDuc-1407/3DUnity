@@ -10,14 +10,16 @@ public class Enemy : MonoBehaviour
     public Seeker seeker;
     public int hpEnemyNow;
     private Animator animatiorEnemy;
+    public GameObject item;
+    public bool checkDead = false;
     [SerializeField] float nextWpDis;
     [SerializeField] float moveSpeed;
+    [SerializeField] int minDamage;
+    [SerializeField] int maxDamage;
     Vector3 direction;
     void Start()
     {
         animatiorEnemy = GetComponent<Animator>();
-        InvokeRepeating("caculatePath", 0f, 0.5f);
-
     }
     void Update()
     {
@@ -26,7 +28,14 @@ public class Enemy : MonoBehaviour
     public void DameEnemy(int damage)
     {
         hpEnemyNow -= damage;
-        FindObjectOfType<UIMangager>().UpdateEnemyHealth();
+        InvokeRepeating("caculatePath", 0f, 0.5f);
+        if (hpEnemyNow <= 0)
+        {
+            checkDead = true;
+            hpEnemyNow = 0;
+            Instantiate(item, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
     void caculatePath()
     {
@@ -72,7 +81,7 @@ public class Enemy : MonoBehaviour
         int currentWp = 0;
         while (currentWp < path.vectorPath.Count)
         {
-            path.vectorPath[currentWp] = new Vector3(path.vectorPath[currentWp].x, 0.554f, path.vectorPath[currentWp].z);
+            path.vectorPath[currentWp] = new Vector3(path.vectorPath[currentWp].x, 0.138f, path.vectorPath[currentWp].z);
             direction = (path.vectorPath[currentWp] - transform.position).normalized;
             Vector3 force = direction * moveSpeed * Time.deltaTime;
             transform.position += force;
@@ -94,5 +103,26 @@ public class Enemy : MonoBehaviour
             // }
             yield return null;
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
+            InvokeRepeating("Damage", 0, 0.3f);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<GameManager>().player = null;
+            CancelInvoke("Damage");
+        }
+    }
+    void Damage()
+    {
+        int damage = Random.Range(minDamage, maxDamage);
+        FindObjectOfType<GameManager>().TakeDamagePlayer(damage);
     }
 }

@@ -12,10 +12,12 @@ public class GameManager : MonoBehaviour
     public GameObject backPack;
     public Health healthUI;
     public EnergyUI energyUI;
-    public List<Enemy> enemy;
+    public Enemy enemy;
+    public List<ItemDatas> itemDatas = new List<ItemDatas>();
+    public ItemDatas itemData;
     public int hpMax = 100;
     public int hpMaxEnemy = 20;
-    [SerializeField] public int energyMax = 4;
+    public int energyMax = 4;
     void Awake()
     {
         if (instance == null)
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.start:
                 StartCoroutine(player.TakeEnergy());
+                ManagerConfig();
                 break;
             case GameState.end:
                 break;
@@ -46,12 +49,21 @@ public class GameManager : MonoBehaviour
     {
         player.Attack();
     }
-    public void TakeDamagePlayer(int damage){
+    public void TakeDamagePlayer(int damage)
+    {
         player.DamePlayer(damage);
     }
-    // public void TakeDameEnemy(int damage){
-    //     enemy[0].DameEnemy(damage);
-    // }
+    public void TakeDameEnemy(int damage)
+    {
+        if (enemy.checkDead == false)
+        {
+            enemy.DameEnemy(damage);
+        }
+    }
+    public void ManagerConfig()
+    {
+        Debug.Log(itemDatas);
+    }
     public enum GameState
     {
         start,

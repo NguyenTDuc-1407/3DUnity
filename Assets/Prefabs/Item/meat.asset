@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf87ea38350a4de4fad00e3b00e2a7b1, type: 3}
-  m_Name: rock
+  m_Name: meat
   m_EditorClassIdentifier: 
   id: 1
-  itemName: rock
-  value: 3
-  itemtype: 0
-  image: {fileID: 21300000, guid: 6201bd477ca514e4fb1588f16bdc37af, type: 3}
-  amount: 0
+  itemName: meat
+  value: 5
+  itemtype: 1
+  image: {fileID: 21300000, guid: 326b89e55a231664c96c5bcd0ea75850, type: 3}

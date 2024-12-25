@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
     {
         while (energyPlayer > 0)
         {
-            // UIMangager.instance.UpdatePlayerEnergy();
             energyPlayer -= 1;
+            UIMangager.instance.UpdatePlayerEnergy();
             yield return new WaitForSeconds(2f);
         }
     }
